@@ -1,0 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerMove : MonoBehaviour
+{
+    public float maxSpeed;
+    Rigidbody2D rigid;
+
+    void Awake()
+    {
+        rigid = GetComponent<Rigidbody2D>();
+    }
+
+    //단발적인 키입력
+    void Update()
+    {
+        if(Input.GetButtonUp("Horizontal"))
+        {
+            //방향구할때사용
+           //rigid.velocity.normalized
+           rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.5f, rigid.velocity.y);
+        }
+    }
+
+    //defalut 50번
+    //지속적인 키입력
+    void FixedUpdate()
+    {
+        //Move By Control
+        float h = Input.GetAxisRaw("Horizontal");
+
+        rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
+
+        if (rigid.velocity.x > maxSpeed) //Right Max speed
+            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
+        else if (rigid.velocity.x < maxSpeed * (-1)) //Left Max speed
+            rigid.velocity = new Vector2(maxSpeed * (-1), rigid.velocity.y);
+    }
+}
