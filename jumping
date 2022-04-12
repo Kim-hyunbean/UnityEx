@@ -1,0 +1,89 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerMove : MonoBehaviour
+{
+    public float maxSpeed;
+    public float jumpPower;
+    Rigidbody2D rigid;
+    SpriteRenderer spriteRenderer;
+    Animator anim;
+
+    //초기화
+    void Awake()
+    {
+        rigid = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent < SpriteRenderer >();
+        anim = GetComponent<Animator>();
+    }
+
+    //단발적인 키입력
+    void Update()
+    {
+
+        //Jump                              점프하고잇지않을때
+        if (Input.GetButtonDown("Jump") && !anim.GetBool("IsJumping"))
+        {
+            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            anim.SetBool("IsJumping", true);
+        }
+            
+
+        //Stop Speed
+        if (Input.GetButtonUp("Horizontal"))
+        {
+            //방향구할때사용
+           //rigid.velocity.normalized
+           rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.5f, rigid.velocity.y);
+           
+        }
+
+        //Direction Sprite 방향전환
+        if (Input.GetButton("Horizontal"))
+            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
+
+        //Animation Walking
+        if (Mathf.Abs( rigid.velocity.x) < 0.3)
+            anim.SetBool("IsWalking", false);
+        else
+            anim.SetBool("IsWalking", true);
+
+    }
+
+    //defalut 50번
+    //지속적인 키입력
+    void FixedUpdate()
+    {
+        //Move By Control
+        float h = Input.GetAxisRaw("Horizontal");
+
+        rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
+
+        if (rigid.velocity.x > maxSpeed) //Right Max speed
+            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
+        else if (rigid.velocity.x < maxSpeed * (-1)) //Left Max speed
+            rigid.velocity = new Vector2(maxSpeed * (-1), rigid.velocity.y);
+
+        //Landing Platform
+        //어려워서 파악하기위하는용도로 사용
+        Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
+        
+
+        if (rigid.velocity.y <0 )
+        {
+            //관통이안되서 플레이어만 맞고있다.
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform"));
+            //플랫폼만 스캔하겟다
+            if (rayHit.collider != null)
+            {
+                if (rayHit.distance < 0.5f)
+                {
+                    Debug.Log(rayHit.collider.name);
+                    anim.SetBool("IsJumping", false);
+                }
+            }
+        }
+            
+    }
+}
