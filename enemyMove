@@ -1,0 +1,74 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnemyMove : MonoBehaviour
+{
+    Rigidbody2D rigid;
+    public int nextMove, randomMove;
+    float nextThinkTime;
+    Animator anim;
+    SpriteRenderer spriteRenderer;
+
+    void Awake()
+    {
+        rigid = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        //주어진 시간이 지난뒤 불러온다
+        Invoke("Think", 3);
+    }
+
+    //기본움직임
+    void FixedUpdate()
+    {
+
+        //Move
+        rigid.velocity = new Vector2(nextMove, rigid.velocity.y);
+
+        //Platform Check
+        Vector2 frontVec = new Vector2(rigid.position.x + nextMove*0.6f, rigid.position.y);
+        //Landing Platform
+        //어려워서 파악하기위하는용도로 사용
+        Debug.DrawRay(frontVec, Vector3.down, new Color(0, 1, 0));
+        //관통이안되서 플레이어만 맞고있다.
+        RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.down, 1, LayerMask.GetMask("Platform"));
+        //플랫폼만 스캔하겟다
+        if (rayHit.collider == null)
+        {
+            turn();
+        }
+    }
+
+    
+    void Think()
+    {
+        //range 최소 최대범위의 랜덤 수 생성
+        //최소값은 랜덤에 포함 최대값은 랜덤에 미포함
+        nextMove = Random.Range(-1,2);
+
+        //방향 움직임조절
+        anim.SetInteger("WalkSpeed", nextMove);
+
+        //방향
+        if(nextMove != 0)
+        spriteRenderer.flipX = nextMove == 1;
+
+        //재귀함수 자신을 스스로 호출
+        nextThinkTime = Random.Range(2f, 5f);
+        Invoke("Think", nextThinkTime);
+    }
+
+    void turn()
+    {
+        randomMove = Random.Range(-1, 1);
+        nextMove = nextMove * randomMove;
+        Debug.Log("Warring! no rand here.");
+        CancelInvoke();
+        anim.SetInteger("WalkSpeed", nextMove);
+        if (nextMove != 0)
+            spriteRenderer.flipX = nextMove == 1;
+        Invoke("Think", nextThinkTime);
+    }
+}
