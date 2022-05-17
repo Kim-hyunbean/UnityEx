@@ -1,0 +1,50 @@
+//플레이어의 위치가 4일때
+        if (playerpos == 4)
+        {
+            if (Input.GetKey(KeyCode.LeftArrow) && transform.position == stagePos4to2[0].transform.position)
+            {
+                EndPosition = stagePos4to2[stageNum].transform.position;
+                transform.position = Vector2.MoveTowards
+                  (transform.position, EndPosition, speed * Time.deltaTime);
+                way = 6;
+                if (transform.position == stagePos4to2[stageNum].transform.position)
+                    stageNum++;
+
+            }
+            else if (transform.position != stagePos4to2[0].transform.position && way == 6)
+            {
+                EndPosition = stagePos4to2[stageNum].transform.position;
+                transform.position = Vector2.MoveTowards
+                  (transform.position, EndPosition, speed * Time.deltaTime);
+                if (transform.position == stagePos4to2[stageNum].transform.position)
+                    stageNum++;
+                if (stageNum == stagePos4to2.Length)
+                {
+                    playerpos = 2;
+                    stageNum = 0;
+                }
+            }
+            if (Input.GetKey(KeyCode.LeftArrow) && transform.position == stagePos4to2[0].transform.position)
+            {
+                EndPosition = stagePos4to2[stageNum].transform.position;
+                transform.position = Vector2.MoveTowards
+                  (transform.position, EndPosition, speed * Time.deltaTime);
+                way = 6;
+                if (transform.position == stagePos4to2[stageNum].transform.position)
+                    stageNum++;
+
+            }
+            else if (transform.position != stagePos4to2[0].transform.position && way == 6)
+            {
+                EndPosition = stagePos4to2[stageNum].transform.position;
+                transform.position = Vector2.MoveTowards
+                  (transform.position, EndPosition, speed * Time.deltaTime);
+                if (transform.position == stagePos4to2[stageNum].transform.position)
+                    stageNum++;
+                if (stageNum == stagePos4to2.Length)
+                {
+                    playerpos = 2;
+                    stageNum = 0;
+                }
+            }
+        }
