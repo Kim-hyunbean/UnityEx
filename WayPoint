@@ -1,0 +1,52 @@
+// 플레이어의 위치가 5일때
+        if (playerpos == 5)
+        {
+            //아래버튼 입력시 4로이동
+            if (Input.GetKey(KeyCode.DownArrow) && transform.position == stagePos5to4[0].transform.position)
+            {
+                EndPosition = stagePos5to4[stageNum].transform.position;
+                transform.position = Vector2.MoveTowards
+                  (transform.position, EndPosition, speed * Time.deltaTime);
+                way = 8;
+                if (transform.position == stagePos5to4[stageNum].transform.position)
+                    stageNum++;
+
+            }
+            else if (transform.position != stagePos5to4[0].transform.position && way == 8)
+            {
+                EndPosition = stagePos5to4[stageNum].transform.position;
+                transform.position = Vector2.MoveTowards
+                  (transform.position, EndPosition, speed * Time.deltaTime);
+                if (transform.position == stagePos5to4[stageNum].transform.position)
+                    stageNum++;
+                if (stageNum == stagePos5to4.Length)
+                {
+                    playerpos = 4;
+                    stageNum = 0;
+                }
+            }
+            //위버튼 입력시 6로 이동
+            if (Input.GetKey(KeyCode.UpArrow) && transform.position == stagePos5to6[0].transform.position)
+            {
+                EndPosition = stagePos5to6[stageNum].transform.position;
+                transform.position = Vector2.MoveTowards
+                  (transform.position, EndPosition, speed * Time.deltaTime);
+                way = 9;
+                if (transform.position == stagePos5to6[stageNum].transform.position)
+                    stageNum++;
+
+            }
+            else if (transform.position != stagePos5to6[0].transform.position && way == 9)
+            {
+                EndPosition = stagePos5to6[stageNum].transform.position;
+                transform.position = Vector2.MoveTowards
+                  (transform.position, EndPosition, speed * Time.deltaTime);
+                if (transform.position == stagePos5to6[stageNum].transform.position)
+                    stageNum++;
+                if (stageNum == stagePos5to6.Length)
+                {
+                    playerpos = 6;
+                    stageNum = 0;
+                }
+            }
+        }
