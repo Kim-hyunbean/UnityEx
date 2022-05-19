@@ -1,0 +1,30 @@
+if (playerpos == 6)
+        {
+            //왼쪽버튼 입력시 5로 이동
+            if (Input.GetKey(KeyCode.LeftArrow) && transform.position == stagePos6to5[0].transform.position)
+            {
+                EndPosition = stagePos6to5[stageNum].transform.position;
+                transform.position = Vector2.MoveTowards
+                  (transform.position, EndPosition, speed * Time.deltaTime);
+                way = 10;
+                anim.SetBool("isWalking", true);
+
+                if (transform.position == stagePos6to5[stageNum].transform.position)
+                    stageNum++;
+
+            }
+            else if (transform.position != stagePos6to5[0].transform.position && way == 10)
+            {
+                EndPosition = stagePos6to5[stageNum].transform.position;
+                transform.position = Vector2.MoveTowards
+                  (transform.position, EndPosition, speed * Time.deltaTime);
+
+                if (transform.position == stagePos6to5[stageNum].transform.position)
+                    stageNum++;
+
+                if (stageNum == stagePos6to5.Length)
+                {
+                    anim.SetBool("isWalking", false);
+                    playerpos = 5;
+                    stageNum = 0;
+                }
