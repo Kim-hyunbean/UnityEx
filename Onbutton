@@ -1,0 +1,85 @@
+public void OnClickButton() 
+    {
+        //Debug.Log(playerPos);
+        if (gubun == pyPos)
+        {
+            Debug.Log("Button Click!");
+            button.onClick.Invoke();
+       /* }else if (gubun == 1){
+            Debug.Log("Button Click!");
+            button.onClick.Invoke();
+        }else if (gubun == 2){
+            Debug.Log("Button Click!");
+            button.onClick.Invoke();
+        }else if (gubun == 3){
+            Debug.Log("Button Click!");
+            button.onClick.Invoke();
+        }else if (gubun == 4){
+            Debug.Log("Button Click!");
+            button.onClick.Invoke();
+        }else if (gubun == 5){
+            Debug.Log("Button Click!");
+            button.onClick.Invoke();*/
+        }
+
+        if (pyPos == 2 )
+        {
+            PlayerPrefs.SetInt("saveST3", 1);
+            PlayerPrefs.SetInt("saveST4", 1);
+        }
+
+        if (pyPos == 3)
+        {
+            PlayerPrefs.DeleteKey("saveST3");
+        }
+        if (pyPos == 4)
+        {
+            PlayerPrefs.DeleteKey("saveST4");
+            PlayerPrefs.SetInt("saveST5", 1);
+        }
+        if (pyPos == 5)
+        {
+            PlayerPrefs.DeleteKey("saveST5");
+            PlayerPrefs.SetInt("saveST6", 1);
+        }
+        if (pyPos == 6)
+        {
+            PlayerPrefs.DeleteKey("saveST3");
+            PlayerPrefs.DeleteKey("saveST4");
+            PlayerPrefs.DeleteKey("saveST5");
+            PlayerPrefs.DeleteKey("saveST6");
+            PlayerPrefs.DeleteKey("savePos");
+        }
+
+        if (pyPos == 0 && gubun == 1)
+        {
+            button.interactable = true;
+        }
+
+        if (saveST3 == 1 && gubun == 3)
+        {
+            button.interactable = true;
+        }
+
+        if (saveST4 == 1 && gubun == 4)
+        {
+            button.interactable = true;
+        }
+
+        if (saveST5 == 1 && gubun == 5)
+        {
+            button.interactable = true;
+        }
+
+        if (saveST6 == 1 && gubun == 6)
+        {
+            button.interactable = true;
+        }
+
+
+    }
+
+    public void loading()
+    {
+        SceneManager.LoadScene("Test Scene");
+    }
