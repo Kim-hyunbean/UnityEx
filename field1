@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+public class load1 : MonoBehaviour
+{
+    [SerializeField] Transform player;
+    [SerializeField] Transform stage;
+    private Vector2 playerPos, stagePos;
+    Button button;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        button = GetComponent<Button>();
+        stagePos = stage.transform.position;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        playerPos = player.transform.position;
+
+        if (playerPos == stagePos && Input.GetKey(KeyCode.Space) && button.interactable == true)
+        {
+            Invoke("loadScene", 1);
+        }
+    }
+
+    public void loadScene()
+    {
+        
+       SceneManager.LoadScene("Test Scene");
+        
+    }
+}
