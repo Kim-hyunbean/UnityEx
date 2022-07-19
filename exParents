@@ -1,0 +1,53 @@
+using UnityEngine;
+
+public class playermanager : MonoBehaviour
+{
+
+    [SerializeField] private int age;
+    //public은 안써야하는데 값을 줘야할대
+
+    public bool temp =  false;
+
+    public PlayerMovement PM;
+
+    private void Awake()
+    {
+        //start < awake 속도
+    }
+    void Start()
+    {
+        //자동으로 찾아줌(할당) 보편적사용
+        PM = FindObjectOfType<PlayerMovement>();
+    }
+
+
+
+    void Update()
+    {
+        //다른곳에서 값 가져오기
+        temp = PM.SRender.flipX;
+        //할당시키기
+    }
+
+    private void FixedUpdate()
+    {
+        //fixedUpdate > update 프레임높음
+    }
+
+    // 충돌감지
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //충돌됫을때 최초로 한번 실행
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        //충돌됫을때 프레임마다 계속
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        //충돌에서 벗어낫을때 한번실행
+    }
+
+}
