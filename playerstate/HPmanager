@@ -1,0 +1,58 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class HPmanager : MonoBehaviour
+{
+    //현재체력
+    public int health;
+
+    //최대체력
+    public int numOfHearts;
+
+    //하트이미지
+    public Image[] hearts;
+    public Sprite fullHeart;
+    public Sprite emptyHeart;
+
+    public playermanager pmanager;
+
+    void Start()
+    {        
+        pmanager = FindObjectOfType<playermanager>();
+    }
+    private void Update()
+    {
+        //저주시 최대체력이 깍이는값을 불러옴
+        numOfHearts = pmanager.pHealth;
+
+        for (int i = 0; i < hearts.Length; i++)
+        {
+
+            //현재체력 > 최대체력
+            if(health > numOfHearts)
+            {
+                health = numOfHearts;
+            }
+
+            // i < 현재체력
+            if(i < health)
+            {
+                hearts[i].sprite = fullHeart;
+            } else
+            {
+                hearts[i].sprite = emptyHeart;
+            }
+
+            // i < 최대체력
+            if(i < numOfHearts)
+            {
+                hearts[i].enabled = true;
+            } else
+            {
+                hearts[i].enabled = false;
+            }
+        }
+    }
+}
